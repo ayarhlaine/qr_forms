@@ -10,7 +10,7 @@ export default function App() {
   return (
     <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'SUSTENIR AGRICULTURE' }}/>
+          <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'SUSTENIR FORMS' }}/>
           <Stack.Screen name="Form" component={FormScreen} options={({ route }) => ({ title: route.params.title })}/>
         </Stack.Navigator>
     </NavigationContainer>
