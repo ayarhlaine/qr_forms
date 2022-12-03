@@ -1,31 +1,32 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, Button, TextInput, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import api from '../api';
 
 const FormScreen = ({ route, navigation  }) => {
     const { documentNo, formInputs, title } = route.params;
     const [data, setData] = useState({});
+    const [loading, setLoading] = useState(false);
     const onTextInputChange = (name, value) => {
         setData(Object.assign(data, { [name]: value }));
     }
     const onSubmit = () => {
-        alert(JSON.stringify(data));
-        fetch(
-        "https://1fybsr.deta.dev/forms", 
-        {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+        setLoading(true);
+        api.post('/forms', {
                 title, documentNo, data
             })
-        })
-        .then((response) => {
-
-        })
-        .catch(error => {
-            console.log(error);
-        })
+            .then((response) => {
+                if(response.status === 201) {
+                    setLoading(false);
+                    setData({});
+                    navigation.navigate('Home')
+                } else {
+                    setLoading(false);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                setLoading(false);
+            })
     }
     const inputs = formInputs.map((formInput) =>
         <View key={formInput.fieldName} style={styles.inputContainer}>
@@ -50,7 +51,10 @@ const FormScreen = ({ route, navigation  }) => {
                 }
             </ScrollView>
             <View style={styles.line}></View>
-            <Button title='Submit' onPress={onSubmit}/>
+            <TouchableOpacity onPress={onSubmit} style={styles.button} disabled={loading}>
+                <Text style={{ color: '#fff', textTransform: 'uppercase', fontWeight: 'bold' }}>Submit</Text>
+                { loading && <ActivityIndicator size="large" style={{ marginLeft: 20 }}/> }
+            </TouchableOpacity>
         </View> 
     )
 }
@@ -72,7 +76,6 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         marginTop: 10,
-        marginBottom: 10,
     },
     input: {
         height: 40,
@@ -82,6 +85,15 @@ const styles = StyleSheet.create({
     },
     scrollView: {
 
+    },
+    button: {
+        height: 50,
+        display: 'flex',
+        flexDirection: 'row',
+        backgroundColor: 'rgb(33, 150, 243)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5
     }
   });
 export default FormScreen;

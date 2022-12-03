@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, ActivityIndicator } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import api from '../api';
 
 const HomeScreen = ({ navigation }) => {
     const [hasPermission, setHasPermission] = useState(null);
@@ -22,17 +23,16 @@ const HomeScreen = ({ navigation }) => {
 
       try {
         const parsed = JSON.parse(data);
-        fetch(`https://1fybsr.deta.dev/forms-config?documentNo=${parsed.documentNo}`)
-        .then(response => response.json())
-        .then((json) => {
-            console.log(json);
-            setScanning(false);
-            navigation.navigate('Form', {...json});
-        })
-        .catch((error) => {
-            console.log(error);
-            setScanning(false);
-        });
+        api.get(`/forms-config?documentNo=${parsed.documentNo}`)
+            .then((json) => {
+              console.log(json.data);
+              setScanning(false);
+              navigation.navigate('Form', {...json.data});
+            })
+            .catch((error) => {
+              console.log(error);
+              setScanning(false);
+            })
       } catch (error) {
         console.log(error);
         setScanning(false);
