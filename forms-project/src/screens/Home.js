@@ -60,7 +60,8 @@ const HomeScreen = ({ navigation }) => {
                     />
                     :
                     <View style={styles.emptyBarCodeReader}>
-                        <Text>Tap to scan!</Text>
+                        <Text>Welcome!</Text>
+                        <Text>Please click the following button to scan. Thank you.</Text>
                     </View>
             }
         </View>
@@ -80,7 +81,6 @@ const styles = StyleSheet.create({
     },
     barCodeReader: {
         flex: 1,
-        backgroundColor: '#e3e3e3',
         padding: 5
     },
     emptyBarCodeReader: {
