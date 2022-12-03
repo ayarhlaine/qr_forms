@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, ScrollView } from 'react-native';
 
 const FormScreen = ({ route, navigation  }) => {
     const { documentNo, formInputs, title } = route.params;
@@ -44,9 +44,11 @@ const FormScreen = ({ route, navigation  }) => {
                 <Text style={{ flex: 1, color: '#000', fontWeight: 'bold', fontSize: 16 }}>{documentNo}</Text>
             </View>
             <View style={styles.line}></View>
-            {
-                inputs
-            }
+            <ScrollView style={styles.scrollView}>
+                {
+                    inputs
+                }
+            </ScrollView>
             <View style={styles.line}></View>
             <Button title='Submit' onPress={onSubmit}/>
         </View> 
@@ -77,6 +79,9 @@ const styles = StyleSheet.create({
         marginTop: 5,
         borderWidth: 1,
         padding: 10
+    },
+    scrollView: {
+
     }
   });
 export default FormScreen;
