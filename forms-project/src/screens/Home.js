@@ -26,7 +26,6 @@ const HomeScreen = ({ navigation }) => {
         const defaultValues = {...parsed};
         api.get(`/forms-config?documentNo=${parsed.documentNo}`)
             .then((json) => {
-              console.log(json.data);
               setScanning(false);
               navigation.navigate('Form', {...json.data, defaultValues });
             })
