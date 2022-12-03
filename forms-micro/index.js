@@ -9,7 +9,7 @@ app.use(express.json()) // for parsing application/json bodies
 app.post('/forms', async (req, res) => {
     const { title, documentNo, data } = req.body;
     console.log(req.body)
-    const toCreate = { title, documentNo, data };
+    const toCreate = { title, documentNo, data, submittedAt: new Date() };
     const insertedUser = await forms.put(toCreate);
     res.status(201).json(insertedUser);
 });
