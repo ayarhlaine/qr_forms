@@ -56,7 +56,6 @@ const FormScreen = ({ route, navigation  }) => {
                     inputs
                 }
             </ScrollView>
-            <View style={styles.line}></View>
             <TouchableOpacity onPress={onSubmit} style={styles.button} disabled={loading}>
                 <Text style={{ color: '#fff', textTransform: 'uppercase', fontWeight: 'bold' }}>Submit</Text>
                 { loading && <ActivityIndicator size="large" style={{ marginLeft: 20 }}/> }
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
      height: 3,
      marginTop: 10,
      marginBottom: 10,
-     backgroundColor: '#000'
+     backgroundColor: '#68BD47'
     },
     inputContainer: {
         marginTop: 10,
